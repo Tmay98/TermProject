@@ -11,13 +11,21 @@
 </head>
 
 <body>
-<div id="user-label"></div>
-<div id="quiz-result"></div>
+<div id="leaderboard-div">
+    <table class="table" id="leaderboard-table">
+        <h1>LeaderBoard</h1>
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+        </tr>
+        </thead>
+    </table>
+</div>
 
-<button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
 <button onclick="window.location.href='./index.html'" type="button" class="btn btn-light">Back</button>
 
-<script src="./js/userLogic.js"></script>
+<script src="./js/leaderboardLogic.js"></script>
 </body>
 
 </html>
