@@ -61,7 +61,7 @@ function Question(questionNumber, q, a1, a2, a3, a4, answerIndex) {
 
 function getQuestionsFromDB() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://www.jsshin.com/COMP4537/labs/quiz/");
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/quiz/");
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -80,19 +80,36 @@ function getQuestionsFromDB() {
 function postQuestionsToDB() {
     questions.forEach((question) => {
         const xhttp = new XMLHttpRequest();
-        if (initialQuestionNumbers.has(String(question.id))) {
-            const url =
-                "https://www.jsshin.com/COMP4537/labs/quiz/" +
-                `?question="${question.question}"&answer1="${question.answer1}"&answer2="${question.answer2}"&answer3="${question.answer3}"&answer4="${question.answer4}"&answerIndex=${question.answerIndex}&id=${question.id}`;
+        let body = {};
+        console.log(String(question.id));
+        console.log(initialQuestionNumbers);
+        console.log(initialQuestionNumbers.has(question.id));
+        if (initialQuestionNumbers.has(question.id)) {
+            const url = "https://www.jsshin.com/API/v1/quiz/";
+            body = JSON.stringify(
+                {"question": question.question,
+                    "answer1": question.answer1,
+                    "answer2": question.answer2,
+                    "answer3": question.answer3,
+                    "answer4": question.answer4,
+                    "answerIndex": question.answerIndex,
+                    "id": question.id});
+                // `?question="${question.question}"&answer1="${question.answer1}"&answer2="${question.answer2}"&answer3="${question.answer3}"&answer4="${question.answer4}"&answerIndex=${question.answerIndex}&id=${question.id}`;
             console.log(url);
             xhttp.open("PUT", url);
         } else {
-            const url =
-                "https://www.jsshin.com/COMP4537/labs/quiz/" +
-                `?question="${question.question}"&answer1="${question.answer1}"&answer2="${question.answer2}"&answer3="${question.answer3}"&answer4="${question.answer4}"&answerIndex=${question.answerIndex}`;
+            const url = "https://www.jsshin.com/API/v1/quiz/";
+            body = JSON.stringify(
+                {"question": question.question,
+                    "answer1": question.answer1,
+                    "answer2": question.answer2,
+                    "answer3": question.answer3,
+                    "answer4": question.answer4,
+                    "answerIndex": question.answerIndex});
+                // `?question="${question.question}"&answer1="${question.answer1}"&answer2="${question.answer2}"&answer3="${question.answer3}"&answer4="${question.answer4}"&answerIndex=${question.answerIndex}`;
             xhttp.open("POST", url);
         }
-        xhttp.send();
+        xhttp.send(body);
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText);
@@ -104,7 +121,7 @@ function postQuestionsToDB() {
 function deleteQuestionFromDB(question) {
     const xhttp = new XMLHttpRequest();
     const url =
-        "https://www.jsshin.com/COMP4537/labs/quiz/" + `?id=${question.id}`;
+        "https://www.jsshin.com/API/v1/quiz/delete/" + `${question.id}`;
     xhttp.open("POST", url);
     xhttp.send();
     xhttp.onreadystatechange = function () {

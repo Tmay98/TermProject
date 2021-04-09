@@ -32,7 +32,7 @@ function appendQuestionToBody(question) {
 
 function getQuestionsFromDB() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://www.jsshin.com/COMP4537/labs/quiz/");
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/quiz/");
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
