@@ -12,6 +12,12 @@ const requestCounter = {
         GET: 0,
         DELETE: 0,
     },
+    "/API/v1/score/": {
+        POST: 0,
+        PUT: 0,
+        GET: 0,
+        DELETE: 0,
+    },
     "/API/v1/counter/": {
         GET: 0,
     },
@@ -36,6 +42,14 @@ app.use(function (req, res, next) {
     );
     next();
 });
+
+///////////////////////////////////////////////////////////////////
+// QUIZ ENDPOINTS
+// GET  - return entire question list as JSON
+// POST - add new question
+// PUT  - update existing question by id
+// POST - delete existing question by id
+///////////////////////////////////////////////////////////////////
 
 app.get(endPointRoot + "quiz/", (req, res) => {
     requestCounter["/API/v1/quiz/"].GET++;
@@ -122,10 +136,109 @@ app.post(endPointRoot + "quiz/delete/:id", (req, res) => {
             console.log(error.database)
             res.send(error.database)
         } else {
-            res.status(200).send(result);
+            // res.status(200).send(result);
+            res.status(200).send(`question "${req.params.id}" deleted from DB.`);
         }
     });
 });
+
+///////////////////////////////////////////////////////////////////
+// SCORE ENDPOINTS
+// GET  - return entire score list as JSON
+// POST - add new score
+// PUT  - update existing score by name
+// POST - delete existing score by name
+///////////////////////////////////////////////////////////////////
+
+app.get(endPointRoot + "score/", (req, res) => {
+    requestCounter["/API/v1/score/"].GET++;
+
+    const sql = "SELECT * FROM score";
+    connection.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log("returned score");
+        res.json(result);
+    });
+});
+
+app.post(endPointRoot + "score/", (req, res) => {
+    requestCounter["/API/v1/score/"].POST++;
+
+    const createTableQuery = [
+        "CREATE TABLE IF NOT EXISTS score",
+        "(id INT AUTO_INCREMENT PRIMARY KEY,",
+        "name VARCHAR(255),",
+        "score INT)",
+    ].join(" ");
+    connection.query(createTableQuery, (err, result) => {
+        if (err) throw err;
+        // console.log(result);
+        console.log("table score created");
+    });
+
+    let body = "";
+    req.on("data", function (chunk) {
+        if (chunk != null) {
+            body += chunk;
+            // console.log(body);
+        }
+    });
+
+    req.on("end", function () {
+        const bodyObj = JSON.parse(body);
+        const sql = `INSERT INTO score(name, score) values ` +
+                    `("${bodyObj.name}", ${bodyObj.score})`;
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            // console.log(result);
+            console.log(`score "${bodyObj.name}: ${bodyObj.score}" stored in DB.`);
+        });
+        res.end(body);
+    });
+});
+
+app.put(endPointRoot + "score/", (req, res) => {
+    requestCounter["/API/v1/score/"].PUT++;
+
+    let body = "";
+    req.on("data", function (chunk) {
+        if (chunk != null) {
+            body += chunk;
+            // console.log(body);
+        }
+    });
+
+    req.on("end", function () {
+        const bodyObj = JSON.parse(body);
+        const sql = `UPDATE score SET score = ${bodyObj.score} WHERE name = "${bodyObj.name}"`;
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            // console.log(result);
+            console.log(`score "${bodyObj.name}: ${bodyObj.score}" updated in DB.`);
+        });
+        res.end(body);
+    });
+});
+
+app.post(endPointRoot + "score/delete/:name", (req, res) => {
+    requestCounter["/API/v1/score/"].DELETE++;
+
+    const sql = `DELETE FROM score WHERE name = "${req.params.name}"`;
+    connection.query(sql, (err, result) => {
+        if (err) {
+            console.log(err)
+            res.send(error.database)
+        } else {
+            // res.status(200).send(result);
+            res.status(200).send(`score "${req.params.name}" deleted from DB.`);
+        }
+    });
+});
+
+///////////////////////////////////////////////////////////////////
+// COUNTER ENDPOINTS
+// GET  - return access records as JSON
+///////////////////////////////////////////////////////////////////
 
 app.get(endPointRoot + "counter/", (req, res) => {
     requestCounter["/API/v1/counter/"].GET++;
