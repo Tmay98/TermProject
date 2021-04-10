@@ -23,8 +23,8 @@ function getScoresFromDb() {
             let responses = JSON.parse(this.responseText);
             responses.sort(sortBigToSmall);
             console.log(responses);
-            responses.forEach((question) => {
-                appendQuestionToBody(question);
+            responses.forEach((score) => {
+                appendQuestionToBody(score);
             });
             scores = responses;
         }
