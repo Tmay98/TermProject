@@ -1,0 +1,580 @@
+{
+	"info": {
+		"_postman_id": "dc226153-2c10-488b-8795-5fe33b2b69f6",
+		"name": "https://www.jsshin.com/",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "quiz",
+							"item": [
+								{
+									"name": "GET",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/quiz/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"quiz",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"question\": \"test question 3\",\r\n    \"answer1\": \"0\",\r\n    \"answer2\": \"1\",\r\n    \"answer3\": \"2\",\r\n    \"answer4\": \"3\",\r\n    \"answerIndex\": 0\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/quiz/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"quiz",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PUT",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"question\": \"test test test\",\r\n    \"answer1\": \"0\",\r\n    \"answer2\": \"1\",\r\n    \"answer3\": \"2\",\r\n    \"answer4\": \"3\",\r\n    \"answerIndex\": 0,\r\n    \"id\": 2\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/quiz/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"quiz",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST DELETE",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/quiz/delete/1",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"quiz",
+												"delete",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "score",
+							"item": [
+								{
+									"name": "GET",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/score/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"score",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST NEW",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Test User\",\r\n    \"score\": 95\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/score/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"score",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PUT",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Tommy\",\r\n    \"score\": 10\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/score/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"score",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST DELETE",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/score/Tommy/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"score",
+												"Tommy",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "counter",
+							"item": [
+								{
+									"name": "GET",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/counter/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"counter",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "login",
+							"item": [
+								{
+									"name": "POST REGISTER",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"admin3\",\r\n    \"password\": \"admin123\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/register/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"register",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "admin",
+													"disabled": true
+												},
+												{
+													"key": "password",
+													"value": "admin123",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST LOGIN",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "a56d4c63-b6c6-4d4a-b013-3e501f8dba5a",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "query",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "apikey",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin123\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://www.jsshin.com/API/v1/login/",
+											"protocol": "https",
+											"host": [
+												"www",
+												"jsshin",
+												"com"
+											],
+											"path": [
+												"API",
+												"v1",
+												"login",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
