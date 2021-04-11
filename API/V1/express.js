@@ -1,10 +1,17 @@
 const express = require("express");
 const mysql = require("mysql");
+const bcrypt = require("bcrypt");
 const app = express();
 const endPointRoot = "/API/v1/";
 const error = {
     database: "Database error!",
 };
+const connection = mysql.createConnection({
+    host: "localhost",
+    user: "Admin",
+    password: "Admin123Admin123",
+    database: "labs",
+});
 const requestCounter = {
     "/API/v1/quiz/": {
         POST: 0,
@@ -23,32 +30,24 @@ const requestCounter = {
     },
 };
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "Admin",
-    password: "Admin123Admin123",
-    database: "labs",
-});
-
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*"); // TODO: change to client side origin  
     res.header(
         "Access-Control-Allow-Methods",
         "PUT, POST, GET, DELETE, OPTIONS"
     );
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
     next();
 });
 
+// For easier access to request body
+app.use(express.urlencoded({ extended: false }));
+
 ///////////////////////////////////////////////////////////////////
 // QUIZ ENDPOINTS
-// GET  - return entire question list as JSON
-// POST - add new question
-// PUT  - update existing question by id
-// POST - delete existing question by id
 ///////////////////////////////////////////////////////////////////
 
 app.get(endPointRoot + "quiz/", (req, res) => {
@@ -82,14 +81,14 @@ app.post(endPointRoot + "quiz/", (req, res) => {
     });
 
     let body = "";
-    req.on("data", function (chunk) {
+    req.on("data", (chunk) => {
         if (chunk != null) {
             body += chunk;
             // console.log(body);
         }
     });
 
-    req.on("end", function () {
+    req.on("end", () => {
         const bodyObj = JSON.parse(body);
         const sql = `INSERT INTO quiz(question, answer1, answer2, answer3, answer4, answerIndex) values ` +
                     `("${bodyObj.question}", ${bodyObj.answer1}, ${bodyObj.answer2}, ${bodyObj.answer3}, ${bodyObj.answer4}, ${bodyObj.answerIndex})`;
@@ -106,14 +105,14 @@ app.put(endPointRoot + "quiz/", (req, res) => {
     requestCounter["/API/v1/quiz/"].PUT++;
 
     let body = "";
-    req.on("data", function (chunk) {
+    req.on("data", (chunk) => {
         if (chunk != null) {
             body += chunk;
             // console.log(body);
         }
     });
 
-    req.on("end", function () {
+    req.on("end", () => {
         const bodyObj = JSON.parse(body);
         const sql = `UPDATE quiz SET question = "${bodyObj.question}", ` +
                     `answer1 = ${bodyObj.answer1}, answer2 = ${bodyObj.answer2}, answer3 = ${bodyObj.answer3}, answer4 = ${bodyObj.answer4}, ` +
@@ -144,10 +143,6 @@ app.post(endPointRoot + "quiz/delete/:id", (req, res) => {
 
 ///////////////////////////////////////////////////////////////////
 // SCORE ENDPOINTS
-// GET  - return entire score list as JSON
-// POST - add new score
-// PUT  - update existing score by name
-// POST - delete existing score by name
 ///////////////////////////////////////////////////////////////////
 
 app.get(endPointRoot + "score/", (req, res) => {
@@ -177,14 +172,14 @@ app.post(endPointRoot + "score/", (req, res) => {
     });
 
     let body = "";
-    req.on("data", function (chunk) {
+    req.on("data", (chunk) => {
         if (chunk != null) {
             body += chunk;
             // console.log(body);
         }
     });
 
-    req.on("end", function () {
+    req.on("end", () => {
         const bodyObj = JSON.parse(body);
         const sql = `INSERT INTO score(name, score) values ` +
                     `("${bodyObj.name}", ${bodyObj.score})`;
@@ -201,14 +196,14 @@ app.put(endPointRoot + "score/", (req, res) => {
     requestCounter["/API/v1/score/"].PUT++;
 
     let body = "";
-    req.on("data", function (chunk) {
+    req.on("data", (chunk) => {
         if (chunk != null) {
             body += chunk;
             // console.log(body);
         }
     });
 
-    req.on("end", function () {
+    req.on("end", () => {
         const bodyObj = JSON.parse(body);
         const sql = `UPDATE score SET score = ${bodyObj.score} WHERE name = "${bodyObj.name}"`;
         connection.query(sql, (err, result) => {
@@ -235,9 +230,97 @@ app.post(endPointRoot + "score/delete/:name", (req, res) => {
     });
 });
 
+
+///////////////////////////////////////////////////////////////////
+// REGISTER/LOGIN ENDPOINTS
+///////////////////////////////////////////////////////////////////
+
+app.post(endPointRoot + "register/", (req, res) => {
+    let body = "";
+    req.on("data", (chunk) => {
+        if (chunk != null) {
+            body += chunk;
+        }
+    });
+
+    req.on("end", () => {
+        const bodyObj = JSON.parse(body);
+
+        const createTableQuery = [
+            "CREATE TABLE IF NOT EXISTS user",
+            "(id INT AUTO_INCREMENT PRIMARY KEY,",
+            "username VARCHAR(255),",
+            "password VARCHAR(255))",
+        ].join(" ");
+        connection.query(createTableQuery, (err, result) => {
+            if (err) throw err;
+            // console.log(result);
+            console.log("table user created");
+        });
+
+        const hashedPassword = bcrypt.hashSync(bodyObj.password, 10);
+        let sql = `SELECT * FROM user WHERE username = "${bodyObj.username}"`;
+        connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                res.status(500).send(error.database)
+            } else {
+                if (result.length === 0) {
+                    sql = `INSERT INTO user(username, password) VALUES ` +
+                          `("${bodyObj.username}", "${hashedPassword}")`;
+                    connection.query(sql, (err, result) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).send(error.database)
+                        } else {
+                            // res.status(200).send(result);
+                            console.log(`User "${bodyObj.username}" added to DB.`);
+                            res.status(200).send(`User "${bodyObj.username}" added to DB.`);
+                        }
+                    });
+                } else {
+                    res.status(400).send("user with this username already exists!")
+                }
+            }
+        });
+    });
+});
+
+app.post(endPointRoot + "login/", async (req, res) => {
+    let body = "";
+    req.on("data", (chunk) => {
+        if (chunk != null) {
+            body += chunk;
+        }
+    });
+
+    req.on("end", () => {
+        const bodyObj = JSON.parse(body);
+        // const hashedPassword = bcrypt.hashSync(bodyObj.password, 10);
+
+        let sql = `SELECT * FROM user WHERE username = "${bodyObj.username}"`;
+        connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                res.status(500).send(error.database)
+            } else {
+                if (result.length === 0) {
+                    res.status(401).send("Login failed. Invalid username!")
+                } else {
+                    if (bcrypt.compareSync(bodyObj.password, result[0].password)) {
+                        console.log("Logged successfully.");
+                        res.status(200).send("Logged successfully.");
+                    } else {
+                        res.status(401).send("Login failed. Invalid password!")
+                    }
+                }
+            }
+        });
+    });
+});
+
 ///////////////////////////////////////////////////////////////////
 // COUNTER ENDPOINTS
-// GET  - return access records as JSON
 ///////////////////////////////////////////////////////////////////
 
 app.get(endPointRoot + "counter/", (req, res) => {
