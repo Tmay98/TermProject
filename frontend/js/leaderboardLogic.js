@@ -1,4 +1,5 @@
 let scores = [];
+const api_key = "?apikey=a56d4c63-b6c6-4d4a-b013-3e501f8dba5a";
 
 function questionHTML(score) {
     return `
@@ -16,7 +17,7 @@ function appendQuestionToBody(question) {
 
 function getScoresFromDb() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://www.jsshin.com/API/v1/score/");
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/score/" + api_key);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
