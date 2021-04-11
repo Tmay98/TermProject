@@ -10,7 +10,8 @@ body {
 }
 .questionDiv {
     margin-bottom: 20px;
-    width: 40vw;
+    width: 80vw;
+    max-width: 600px;
 }
 #quiz-result {
     margin-bottom: 20px;

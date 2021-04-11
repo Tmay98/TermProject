@@ -1,3 +1,10 @@
 body {
-    margin: 10vh 5vw;
+    margin: 10vh 4vw;
+}
+.pad {
+    max-width: 200px;
+    margin-bottom: 4px;
+}
+#counterTable {
+    display: none;
 }
