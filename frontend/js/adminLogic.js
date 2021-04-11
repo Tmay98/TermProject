@@ -1,5 +1,6 @@
 let questions = [];
 let initialQuestionNumbers = new Set();
+const api_key = "?apikey=a56d4c63-b6c6-4d4a-b013-3e501f8dba5a";
 
 function questionHTML(question) {
     return `
@@ -61,7 +62,7 @@ function Question(questionNumber, q, a1, a2, a3, a4, answerIndex) {
 
 function getQuestionsFromDB() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://www.jsshin.com/API/v1/quiz/");
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/quiz/" + api_key);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -85,7 +86,7 @@ function postQuestionsToDB() {
         console.log(initialQuestionNumbers);
         console.log(initialQuestionNumbers.has(question.id));
         if (initialQuestionNumbers.has(question.id)) {
-            const url = "https://www.jsshin.com/API/v1/quiz/";
+            const url = "https://www.jsshin.com/API/v1/quiz/" + api_key;
             body = JSON.stringify(
                 {"question": question.question,
                     "answer1": question.answer1,
@@ -98,7 +99,7 @@ function postQuestionsToDB() {
             console.log(url);
             xhttp.open("PUT", url);
         } else {
-            const url = "https://www.jsshin.com/API/v1/quiz/";
+            const url = "https://www.jsshin.com/API/v1/quiz/" + api_key;
             body = JSON.stringify(
                 {"question": question.question,
                     "answer1": question.answer1,
@@ -121,8 +122,8 @@ function postQuestionsToDB() {
 function deleteQuestionFromDB(question) {
     const xhttp = new XMLHttpRequest();
     const url =
-        "https://www.jsshin.com/API/v1/quiz/delete/" + `${question.id}`;
-    xhttp.open("POST", url);
+        "https://www.jsshin.com/API/v1/quiz/delete/" + `${question.id}` + "/" + api_key;
+    xhttp.open("DELETE", url);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {

@@ -1,6 +1,7 @@
 let questions = [];
 let scores = [];
 let initialNames = new Set();
+const api_key = "?apikey=a56d4c63-b6c6-4d4a-b013-3e501f8dba5a";
 
 function questionHTML(question) {
     return `
@@ -34,7 +35,7 @@ function appendQuestionToBody(question) {
 
 function getQuestionsFromDB() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://www.jsshin.com/API/v1/quiz/");
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/quiz/"  + api_key);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -62,7 +63,7 @@ function loadQuestions() {
 
 function getScoresFromDB() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://www.jsshin.com/API/v1/score/");
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/score/"  + api_key);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -79,7 +80,7 @@ function getScoresFromDB() {
 
 function postScoreToDB(score) {
     const xhttp = new XMLHttpRequest();
-    const url = "https://www.jsshin.com/API/v1/score/";
+    const url = "https://www.jsshin.com/API/v1/score/"  + api_key;
     let body = {};
     if (initialNames.has(score.name)) {
         body = JSON.stringify(
