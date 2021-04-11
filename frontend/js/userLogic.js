@@ -1,4 +1,6 @@
 let questions = [];
+let scores = [];
+let initialNames = new Set();
 
 function questionHTML(question) {
     return `
@@ -32,7 +34,7 @@ function appendQuestionToBody(question) {
 
 function getQuestionsFromDB() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://www.jsshin.com/COMP4537/labs/quiz/");
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/quiz/");
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -55,6 +57,50 @@ function loadQuestions() {
     getQuestionsFromDB();
 }
 
+
+// Stuff related to getting and posting score to leaderboard
+
+function getScoresFromDB() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://www.jsshin.com/API/v1/score/");
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let responses = JSON.parse(this.responseText);
+            console.log(responses);
+            responses.forEach((score) => {
+                scores.push(score);
+                initialNames.add(score.name);
+            });
+        }
+    };
+
+}
+
+function postScoreToDB(score) {
+    const xhttp = new XMLHttpRequest();
+    const url = "https://www.jsshin.com/API/v1/score/";
+    let body = {};
+    if (initialNames.has(score.name)) {
+        body = JSON.stringify(
+            {"name": score.name,
+                "score": score.score});
+        xhttp.open("PUT", url);
+    } else {
+        body = JSON.stringify(
+            {"name": score.name,
+                "score": score.score});
+        xhttp.open("POST", url);
+    }
+
+    xhttp.send(body);
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    };
+}
+
 const submitBtn = () => {
     let wrongCount = 0;
     let message = "";
@@ -71,9 +117,12 @@ const submitBtn = () => {
     message =
         `Score: ${questions.length - wrongCount}/${questions.length}\n` +
         message;
+    let score = {"name": document.getElementById("name").value, "score": ((questions.length - wrongCount) / questions.length) * 100};
+    postScoreToDB(score);
     document.getElementById("quiz-result").innerText = message;
     window.alert(message);
 };
 
 loadQuestions();
 document.getElementById("submitBtn").onclick = submitBtn;
+getScoresFromDB();
