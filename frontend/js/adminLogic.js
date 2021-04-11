@@ -123,7 +123,7 @@ function deleteQuestionFromDB(question) {
     const xhttp = new XMLHttpRequest();
     const url =
         "https://www.jsshin.com/API/v1/quiz/delete/" + `${question.id}` + "/" + api_key;
-    xhttp.open("POST", url);
+    xhttp.open("DELETE", url);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
