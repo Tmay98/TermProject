@@ -11,12 +11,14 @@
 </head>
 
 <body>
+    <h1>Request Counter</h1>
+    <p>Base url: https://www.jsshin.com</p>
+    <hr/>
     <table class="table">
-        <h1>Request Counter</h1>
-        <p>Temporary base url: https://www.jsshin.com</p>
+        <h3>Quiz endpoints</h3>
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Group</th>
                 <th scope="col">Method</th>
                 <th scope="col">Endpoint</th>
                 <th scope="col">Requests</th>
@@ -24,28 +26,66 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="row">1</th>
+                <th scope="row">Quiz</th>
                 <td>GET</td>
-                <td>/COMP4537/labs/quiz</td>
+                <td>/API/v1/quiz/</td>
                 <td id="quizGet"></td>
             </tr>
             <tr>
-                <th scope="row">2</th>
+                <th scope="row">Quiz</th>
                 <td>POST</td>
-                <td>/COMP4537/labs/quiz</td>
+                <td>/API/v1/quiz/</td>
                 <td id="quizPost"></td>
             </tr>
             <tr>
-                <th scope="row">3</th>
+                <th scope="row">Quiz</th>
                 <td>PUT</td>
-                <td>/COMP4537/labs/quiz</td>
+                <td>/API/v1/quiz/</td>
                 <td id="quizPut"></td>
             </tr>
             <tr>
-                <th scope="row">4</th>
+                <th scope="row">Quiz</th>
                 <td>DELETE</td>
-                <td>/COMP4537/labs/quiz</td>
+                <td>/API/v1/quiz/delete/{id}</td>
                 <td id="quizDelete"></td>
+            </tr>
+
+            <tr>
+                <th scope="row">Score</th>
+                <td>GET</td>
+                <td>/API/v1/score/</td>
+                <td id="scoreGet"></td>
+            </tr>
+            <tr>
+                <th scope="row">Score</th>
+                <td>POST</td>
+                <td>/API/v1/score/</td>
+                <td id="scorePost"></td>
+            </tr>
+            <tr>
+                <th scope="row">Score</th>
+                <td>PUT</td>
+                <td>/API/v1/score/</td>
+                <td id="scorePut"></td>
+            </tr>
+            <tr>
+                <th scope="row">Score</th>
+                <td>DELETE</td>
+                <td>/API/v1/score/delete/{name}</td>
+                <td id="scoreDelete"></td>
+            </tr>
+
+            <tr>
+                <th scope="row">Register</th>
+                <td>POST</td>
+                <td>/API/v1/register/</td>
+                <td id="register"></td>
+            </tr>
+            <tr>
+                <th scope="row">Login</th>
+                <td>POST</td>
+                <td>/API/v1/score/login/</td>
+                <td id="login"></td>
             </tr>
         </tbody>
     </table>
